@@ -36,8 +36,8 @@ private:
     std::vector<Edge<V> *> * getEdges();
     unsigned int getTime();
     std::vector<std::string> * getStringMaxCostPaths();
-    
-    // Metodi Ulteriori
+
+    // Metodi Ulteriori Privati
     void addVertex(Vertex<V> * vertexToAdd);
         // Aggiunge il "vertexToAdd" al Grafo
     void addEdge(Edge<V> * edgeToAdd);
@@ -82,7 +82,7 @@ public:
 //    std::vector<Vertex<V> *> * getVertices();
 //    std::vector<Edge<V> *> * getEdges();
 //    unsigned int getTime();
-//    std::vector<std::string> * getStringMaxPaths();
+//    std::vector<std::string> * getStringMaxCostPaths();
 //
 //    // Metodi Ulteriori
 //    void addVertex(Vertex<V> * vertexToAdd);
@@ -117,8 +117,8 @@ template <class V> void Graph<V>::setTime(unsigned int newTime) {
     this->time = newTime;
 }
 
-template <class V> void Graph<V>::setStringMaxCostPaths(std::vector<std::string> * newStringMaxPaths) {
-    this->stringMaxPaths = newStringMaxPaths;
+template <class V> void Graph<V>::setStringMaxCostPaths(std::vector<std::string> * newStringMaxCostPaths) {
+    this->stringMaxCostPaths = newStringMaxCostPaths;
 }
 
 
@@ -136,11 +136,11 @@ template <class V> unsigned int Graph<V>::getTime() {
 }
 
 template <class V> std::vector<std::string> * Graph<V>::getStringMaxCostPaths() {
-    return this->stringMaxPaths;
+    return this->stringMaxCostPaths;
 }
 
 
-// Metodi Ulteriori
+// Implementazione Metodi Ulteriori
 template <class V> void Graph<V>::addVertex(Vertex<V> * vertexToAdd) {
     getVertices()->push_back(vertexToAdd);
 }

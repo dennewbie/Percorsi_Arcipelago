@@ -14,8 +14,8 @@
             filePath = "Percorsi_Arcipelago/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "main()"
             landmarkType = "9">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "Percorsi_Arcipelago/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "main()"
             landmarkType = "9">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "Percorsi_Arcipelago/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "main()"
             landmarkType = "9">
          </BreakpointContent>
@@ -87,22 +87,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BE57D8C9-938D-4553-B3A2-CD5B35220043"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Percorsi_Arcipelago/main.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "main()"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "28CC8C65-023C-4AC2-AFF9-86228F0AEC6B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -126,8 +110,8 @@
             filePath = "Percorsi_Arcipelago/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "main()"
             landmarkType = "9">
          </BreakpointContent>

@@ -44,7 +44,7 @@ private:
     std::list <Edge <V> *> * getAdjacencyList();
     Vertex<V> * getParent();
     
-    //Metodi Ulteriori
+    //Metodi Ulteriori Privati
     void resetVertex();                                     // Reset degli attributi del vertice
     void addEdgeToAdjacencyList(Edge <V> * newEdge);        // Aggiunge newEdge alla lista di adiacenza del vertice sul quale viene invocato
     

@@ -8,6 +8,13 @@
 #include <iostream>
 #include "Archipelago.hpp"
 
+/*
+    N.B:
+    Anche se fai tornare un ptr a un nodo per es. e lo metti a nullptr nel main per es.
+    Non cambia quello che sta memorizzato nella classe. Valutare se rendere pubblici i
+    metodi del tipo getParent(), getSource(), getDestination() e così via.
+ */
+
 int main() {
     Vertex<int> * tempVertex_0 = new Vertex<int>(10);
     Vertex<int> * tempVertex_1 = new Vertex<int>(20);
