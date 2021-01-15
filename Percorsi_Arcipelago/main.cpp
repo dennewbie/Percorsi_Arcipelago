@@ -6,12 +6,16 @@
 //
 
 #include <iostream>
-#include "Vertex.hpp"
+#include "Edge.hpp"
+//#include "Vertex.hpp"
 
 int main() {
-    Vertex<int> temp_1 = Vertex<int>(5);
-    Vertex<int> temp_2 = Vertex<int>(5);
-    Vertex<int> temp_3 = Vertex<int>(5);
-    Vertex<int> temp_4 = Vertex<int>(5);
+    Vertex<int> * tempVertex_1 = new Vertex<int>(5);
+    Vertex<int> * tempVertex_2 = new Vertex<int>(6);
+    Vertex<int> * tempVertex_3 = new Vertex<int>(7);
+    Vertex<int> * tempVertex_4 = new Vertex<int>(8);
+    
+    Edge<int> * tempEdge_1 = new Edge<int>(tempVertex_1, tempVertex_2, 2);
+
     return 0;
 }

@@ -16,7 +16,7 @@
 #define BLACK 3
 
 template <class V> class Vertex {
-    template<class U> friend class Graph;
+//    template<class U> friend class Graph;
     
 private:
     static unsigned int currID;                 // contatore
@@ -61,7 +61,7 @@ public:
     // Distruttore
     ~Vertex() {
         delete getAdjacencyList();
-        this->currID--;
+//        this->currID--; altrimenti abbiamo stessi ID per più vertici
     }
     
     // Metodi Get Pubblici
@@ -73,8 +73,10 @@ public:
     unsigned short int getColor();
 };
 
-// Inizializzazione contatore
+
+// Inizializzazione contatore Vertex
 template <class V> unsigned int Vertex<V>::currID = 0;
+
 
 // Implementazione Metodi Set
 template <class V> void Vertex<V>::setParent(Vertex<V> * newParent) {
@@ -105,8 +107,8 @@ template <class V> void Vertex<V>::setColor(unsigned short int newColor) {
     this->color = newColor;
 }
 
-// Implementazione Metodi Get
 
+// Implementazione Metodi Get
 template <class V> unsigned int Vertex<V>::getID() {
     return this->ID;
 }
