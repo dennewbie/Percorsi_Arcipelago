@@ -16,7 +16,7 @@
 #define BLACK 3
 
 template <class V> class Vertex {
-//    template<class U> friend class Graph;
+    template <class T> friend class Graph;
     
 private:
     static unsigned int currID;                 // contatore
@@ -142,7 +142,6 @@ template <class V> unsigned short int Vertex<V>::getColor() {
 }
 
 // Implementazione Metodi Ulteriori
-
 template <class V> void Vertex<V>::resetVertex() {
     setParent(nullptr);
     set_d(std::numeric_limits<int>::min());

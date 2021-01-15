@@ -5,9 +5,10 @@
 //  Created by Denny Caruso on 14/01/21.
 //
 
-#include <iostream>
-#include "Edge.hpp"
+//#include <iostream>
+//#include "Edge.hpp"
 //#include "Vertex.hpp"
+#include "Graph.hpp"
 
 int main() {
     Vertex<int> * tempVertex_1 = new Vertex<int>(5);
@@ -16,6 +17,8 @@ int main() {
     Vertex<int> * tempVertex_4 = new Vertex<int>(8);
     
     Edge<int> * tempEdge_1 = new Edge<int>(tempVertex_1, tempVertex_2, 2);
+    
+    Graph<int> tempGraph;
 
     return 0;
 }

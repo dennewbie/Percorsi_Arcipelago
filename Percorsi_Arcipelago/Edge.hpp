@@ -8,13 +8,21 @@
 #ifndef Edge_hpp
 #define Edge_hpp
 
-#include "Vertex.hpp"
-#include <type_traits>
-//template <class V> class Vertex; testing se va bene oppure com'è ora
-// Non è possibile usare i Variable Template se non a partire dal C++ 14
+//#include "Vertex.hpp"
+template <class V> class Vertex;
+    /*
+        N.B. 1:
+        Testing con questa dichiarazione se va bene oppure con #include di Vertex anche qui.
+        In quest'ultimo caso valutare cosa importare in Graph
+     */
+
+    /*
+        N.B. 2:
+        Non è possibile usare i Variable Template se non a partire dal C++ 14
+     */
 
 template <class V> class Edge {
-//    template<class U> friend class Graph;
+    template <class T> friend class Graph;
 private:
     static unsigned int currID;     // contatore
     const unsigned int ID;          // codice identificativo univoco dell'arco

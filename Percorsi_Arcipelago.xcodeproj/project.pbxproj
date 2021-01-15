@@ -27,6 +27,7 @@
 		52A9357A25B0D83600C9B9EA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		52A9358425B0DAAA00C9B9EA /* Vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
 		52ACB04525B194BB002D2B7E /* Edge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Edge.hpp; sourceTree = "<group>"; };
+		52ACB04B25B1A9BD002D2B7E /* Graph.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Graph.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +63,7 @@
 				52A9357A25B0D83600C9B9EA /* main.cpp */,
 				52A9358425B0DAAA00C9B9EA /* Vertex.hpp */,
 				52ACB04525B194BB002D2B7E /* Edge.hpp */,
+				52ACB04B25B1A9BD002D2B7E /* Graph.hpp */,
 			);
 			path = Percorsi_Arcipelago;
 			sourceTree = "<group>";
