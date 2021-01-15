@@ -6,7 +6,7 @@
 //
 
 #include <iostream>
-#include "Graph.hpp"
+#include "Archipelago.hpp"
 
 int main() {
     Vertex<int> * tempVertex_0 = new Vertex<int>(10);
@@ -45,10 +45,10 @@ int main() {
 //    tempGraph.addEdge(tempEdge_7);
 //    tempGraph.addEdge(tempEdge_8);
 //    tempGraph.addEdge(tempEdge_9);
-//    tempGraph.getMaxPaths(tempVertex_1);
+//    tempGraph.getMaxCostPaths(tempVertex_1);
 //
 //
-//    std::vector<std::string> * stringMaxPaths = tempGraph.getStringMaxPaths();
+//    std::vector<std::string> * stringMaxPaths = tempGraph.getStringMaxCostPaths();
 //    for (auto it: *stringMaxPaths) {
 //        std::cout << it;
 //    }

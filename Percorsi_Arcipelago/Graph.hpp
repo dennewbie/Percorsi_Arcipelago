@@ -20,22 +20,22 @@ private:
     std::vector<Vertex<V> *> * vertices;        // Vector di Vertici
     std::vector<Edge<V> *> * edges;             // Vector di Archi
     unsigned int time;                          // Tempo (usato come contatore nelle visite)
-    std::vector<std::string> * stringMaxPaths;  /*
-                                                   Puntatore a Vector di stringhe, dove ogni stringa contiene il percorso
-                                                   con la massima qualità tra il nodo sorgente e un nodo destinazione
-                                                */
+    std::vector<std::string> * stringMaxCostPaths;  /*
+                                                     Puntatore a Vector di stringhe, dove ogni stringa contiene il percorso
+                                                     con la massima qualità tra il nodo sorgente e un nodo destinazione
+                                                     */
     
     // Metodi Set
     void setVertices(std::vector<Vertex<V> *> * newVertices);
     void setEdges(std::vector<Edge<V> *> * newEdges);
     void setTime(unsigned int newTime);
-    void setStringMaxPaths(std::vector<std::string> * newStringMaxPaths);
+    void setStringMaxCostPaths(std::vector<std::string> * newStringMaxPaths);
     
     // Metodi Get
     std::vector<Vertex<V> *> * getVertices();
     std::vector<Edge<V> *> * getEdges();
     unsigned int getTime();
-    std::vector<std::string> * getStringMaxPaths();
+    std::vector<std::string> * getStringMaxCostPaths();
     
     // Metodi Ulteriori
     void addVertex(Vertex<V> * vertexToAdd);
@@ -50,9 +50,9 @@ private:
         // Visita per generare l'ordinamento topologico
     void relax(Edge<V> * edgeToRelax);
         // Verifica se la stima di cammino di peso massimo può essere aggiornata
-    void getMaxPaths(Vertex<V> * source);
+    void getMaxCostPathsFromSource(Vertex<V> * source);
         // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
-    void getMaxPathToVertex(Vertex<V> * source, Vertex<V> * destination);
+    void getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination);
         // Calcola il cammino di peso massimo da una determinata sorgente a una determinata destinazione
     
 public:
@@ -61,7 +61,7 @@ public:
         setTime(0);
         setVertices(new std::vector<Vertex<V> *>);
         setEdges(new std::vector<Edge<V> *>);
-        setStringMaxPaths(new std::vector<std::string>);
+        setStringMaxCostPaths(new std::vector<std::string>);
     }
     
     // Distruttore
@@ -74,7 +74,7 @@ public:
         getEdges()->clear();
         delete getEdges();
         
-        delete getStringMaxPaths();
+        delete getStringMaxCostPaths();
     }
     
     // Per testarli mettendolo pubblici
@@ -97,9 +97,9 @@ public:
 //        // Visita per generare l'ordinamento topologico
 //    void relax(Edge<V> * edgeToRelax);
 //        // Verifica se la stima di cammino di peso massimo può essere aggiornata
-//    void getMaxPaths(Vertex<V> * source);
+//    void getMaxCostPathsFromSource(Vertex<V> * source);
 //        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
-//    void getMaxPathToVertex(Vertex<V> * source, Vertex<V> * destination);
+//    void getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination);
 //        // Calcola il cammino di peso massimo da una determinata sorgente a una determinata destinazione
 };
 
@@ -117,7 +117,7 @@ template <class V> void Graph<V>::setTime(unsigned int newTime) {
     this->time = newTime;
 }
 
-template <class V> void Graph<V>::setStringMaxPaths(std::vector<std::string> * newStringMaxPaths) {
+template <class V> void Graph<V>::setStringMaxCostPaths(std::vector<std::string> * newStringMaxPaths) {
     this->stringMaxPaths = newStringMaxPaths;
 }
 
@@ -135,7 +135,7 @@ template <class V> unsigned int Graph<V>::getTime() {
     return this->time;
 }
 
-template <class V> std::vector<std::string> * Graph<V>::getStringMaxPaths() {
+template <class V> std::vector<std::string> * Graph<V>::getStringMaxCostPaths() {
     return this->stringMaxPaths;
 }
 
@@ -199,7 +199,7 @@ template <class V> void Graph<V>::relax(Edge<V> * edgeToRelax) {
     }
 }
 
-template <class V> void Graph<V>::getMaxPaths(Vertex<V> * source) {
+template <class V> void Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) {
     std::stack<Vertex<V> *> stackTopologicalOrder = getTopologicalOrderStack();
     source->set_d(0);
     source->setParent(nullptr);
@@ -213,12 +213,12 @@ template <class V> void Graph<V>::getMaxPaths(Vertex<V> * source) {
         }
     }
     
-    for (auto & singleNode: *(getVertices())) getMaxPathToVertex(source, singleNode);
+    for (auto & singleNode: *(getVertices())) getMaxCostPathToDestination(source, singleNode);
 }
 
 // Qui capire se va usato il campo ID o il campo data, quando si costruisce la stringa col path
 // Pensa se non vengono inseriti in ordine crescente come sulle fotocopie della traccia e quindi non puoi sfruttare gli ID
-template <class V> void Graph<V>::getMaxPathToVertex(Vertex<V> * source, Vertex<V> * destination) {
+template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination) {
     std::stringstream pathFromSourceToDestination("", std::ios_base::app | std::ios_base::out);
 
     std::stack<std::string> stringMaxPathsStack;
@@ -247,14 +247,13 @@ template <class V> void Graph<V>::getMaxPathToVertex(Vertex<V> * source, Vertex<
     
     pathFromSourceToDestination << "\n------------------------------\n" << source->getID();
     
-    
     while (!(stringMaxPathsStack.empty())) {
         pathFromSourceToDestination << stringMaxPathsStack.top();
         stringMaxPathsStack.pop();
     }
     
     pathFromSourceToDestination << "\n\n";
-    getStringMaxPaths()->push_back(pathFromSourceToDestination.str());
+    getStringMaxCostPaths()->push_back(pathFromSourceToDestination.str());
 }
 
 #endif /* Graph_hpp */
