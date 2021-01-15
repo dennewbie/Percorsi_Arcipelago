@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <stack>
 #include "Vertex.hpp"
 #include "Edge.hpp"
@@ -28,13 +29,13 @@ private:
     void setVertices(std::vector<Vertex<V> *> * newVertices);
     void setEdges(std::vector<Edge<V> *> * newEdges);
     void setTime(unsigned int newTime);
-    void setStringPaths(std::vector<std::string> newStringPaths);
+    void setStringMaxPaths(std::vector<std::string> newStringMaxPaths);
     
     // Metodi Get
     std::vector<Vertex<V> *> * getVertices();
     std::vector<Edge<V> *> * getEdges();
     unsigned int getTime();
-    std::vector<std::string> getStringPaths();
+    std::vector<std::string> getStringMaxPaths();
     
     // Metodi Ulteriori
     void addVertex(Vertex<V> * vertexToAdd);    // Aggiunge il "vertexToAdd" al Grafo
@@ -42,8 +43,9 @@ private:
     void resetVerticesProperties();             // Resetta le proprietà di tutti i vertici v del Grafo
     std::stack<Vertex<V> *> getTopologicalOrderStack();
     void DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack);
-    void relax(Vertex<V> * source, Vertex<V> * destination);
+    void relax(Edge<V> * edgeToRelax);
     void getMaxPaths(Vertex<V> * source);
+    void getMaxPathToVertex(Vertex<V> * source, Vertex<V> * destination);
     
 public:
     // Costrutrore
@@ -63,6 +65,18 @@ public:
         getEdges()->clear();
         delete getEdges();
     }
+    
+    
+//    std::vector<std::string> getStringMaxPaths();
+//    // Metodi Ulteriori
+//    void addVertex(Vertex<V> * vertexToAdd);    // Aggiunge il "vertexToAdd" al Grafo
+//    void addEdge(Edge<V> * edgeToAdd);          // Aggiunge l' "edgeToAdd"   al Grafo
+//    void resetVerticesProperties();             // Resetta le proprietà di tutti i vertici v del Grafo
+//    std::stack<Vertex<V> *> getTopologicalOrderStack();
+//    void DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack);
+//    void relax(Edge<V> * edgeToRelax);
+//    void getMaxPaths(Vertex<V> * source);
+//    void getMaxPathToVertex(Vertex<V> * source, Vertex<V> * destination);
 };
 
 
@@ -79,8 +93,8 @@ template <class V> void Graph<V>::setTime(unsigned int newTime) {
     this->time = newTime;
 }
 
-template <class V> void Graph<V>::setStringPaths(std::vector<std::string> newStringPaths) {
-    this->stringPaths = newStringPaths;
+template <class V> void Graph<V>::setStringMaxPaths(std::vector<std::string> newStringMaxPaths) {
+    this->stringMaxPaths = newStringMaxPaths;
 }
 
 
@@ -97,8 +111,8 @@ template <class V> unsigned int Graph<V>::getTime() {
     return this->time;
 }
 
-template <class V> std::vector<std::string> Graph<V>::getStringPaths() {
-    return this->stringPaths;
+template <class V> std::vector<std::string> Graph<V>::getStringMaxPaths() {
+    return this->stringMaxPaths;
 }
 
 
@@ -109,6 +123,7 @@ template <class V> void Graph<V>::addVertex(Vertex<V> * vertexToAdd) {
 
 template <class V> void Graph<V>::addEdge(Edge<V> * edgeToAdd) {
     getEdges()->push_back(edgeToAdd);
+    getVertices()->at(edgeToAdd->getSource()->getID())->addEdgeToAdjacencyList(edgeToAdd);
 }
 
 template <class V> void Graph<V>::resetVerticesProperties() {
@@ -135,10 +150,9 @@ template <class V> void Graph<V>::DFS_visitTopologicalOrder(Vertex<V> * vertex, 
     vertex->set_dTime(getTime());
     
     for (auto & adjacentNodeToVertex: *(vertex->getAdjacencyList())) {
-        if (adjacentNodeToVertex->getColor() == WHITE) {
-            //            std::cout << "\n" << adjacentNodeToU->getData();
-            adjacentNodeToVertex->setParent(vertex);
-            DFS_visitTopologicalOrder(adjacentNodeToVertex, inputStack);
+        if (adjacentNodeToVertex->getDestination()->getColor() == WHITE) {
+            adjacentNodeToVertex->getDestination()->setParent(vertex);
+            DFS_visitTopologicalOrder(adjacentNodeToVertex->getDestination(), inputStack);
         }
     }
     
@@ -148,21 +162,75 @@ template <class V> void Graph<V>::DFS_visitTopologicalOrder(Vertex<V> * vertex, 
     inputStack->push(vertex);
 }
 
-template <class V> void Graph<V>::relax(Vertex<V> * source, Vertex<V> * destination) {
+template <class V> void Graph<V>::relax(Edge<V> * edgeToRelax) {
+    Vertex<V> * u = edgeToRelax->getSource();
+    Vertex<V> * v = edgeToRelax->getDestination();
+    int weight = edgeToRelax->getWeight();
     
+    if (u->get_d() + weight == (std::numeric_limits<int>::min()) + weight) return;
+    
+    if (v->get_d() < u->get_d() + weight) {
+        v->set_d(u->get_d() + weight);
+        v->setParent(u);
+    }
 }
 
 template <class V> void Graph<V>::getMaxPaths(Vertex<V> * source) {
     std::stack<Vertex<V> *> stackTopologicalOrder = getTopologicalOrderStack();
+    source->set_d(0);
+    source->setParent(nullptr);
     
     while (!(stackTopologicalOrder.empty())) {
         Vertex<V> * vertex = stackTopologicalOrder.top();
         stackTopologicalOrder.pop();
         
-        for (auto & adjacentNodeToVertex: *(vertex->getAdjacencyList())) {
-            
+        for (auto & adjacentEdgeToVertex: *(vertex->getAdjacencyList())) {
+            relax(adjacentEdgeToVertex);
         }
     }
+    
+    for (auto & singleNode: *(getVertices())) getMaxPathToVertex(source, singleNode);
+}
+
+// Qui capire se va usato il campo ID o il campo data, quando si costruisce la stringa col path
+// Pensa se non vengono inseriti in ordine crescente come sulle fotocopie della traccia e quindi non puoi sfruttare gli ID
+template <class V> void Graph<V>::getMaxPathToVertex(Vertex<V> * source, Vertex<V> * destination) {
+    std::stringstream pathFromSourceToDestination("", std::ios_base::app | std::ios_base::out);
+
+    std::stack<std::string> stringMaxPathsStack;
+    if (destination->get_d() == std::numeric_limits<int>::min()) {
+        stringMaxPathsStack.push("-∞");
+    } else {
+        stringMaxPathsStack.push(std::to_string(destination->get_d()));
+    }
+    
+    stringMaxPathsStack.push("   ");
+    
+    Vertex<V> * current = destination;
+
+    if (current->getParent() == nullptr) {
+        std::string temp = "->";
+        temp.append(std::to_string(current->getID()));
+        stringMaxPathsStack.push(temp);
+        pathFromSourceToDestination << "\n------------------------------\n" << source->getID();
+    } else {
+        while (current->getParent() != nullptr) {
+            std::string temp = "->";
+            temp.append(std::to_string(current->getID()));
+            stringMaxPathsStack.push(temp);
+            current = current->getParent();
+        }
+        pathFromSourceToDestination << "\n------------------------------\n" << source->getID();
+    }
+    
+    
+    while (!(stringMaxPathsStack.empty())) {
+        pathFromSourceToDestination << stringMaxPathsStack.top();
+        stringMaxPathsStack.pop();
+    }
+    
+    pathFromSourceToDestination << "\n\n";
+    this->stringMaxPaths.push_back(pathFromSourceToDestination.str());
 }
 
 #endif /* Graph_hpp */

@@ -15,6 +15,8 @@
 #define GRAY  2
 #define BLACK 3
 
+template <class V> class Edge;
+
 template <class V> class Vertex {
     template <class T> friend class Graph;
     
@@ -26,25 +28,25 @@ private:
     unsigned int dTime;                         // tempo in cui è stato scoperto il nodo (tempo inizio visita)
     unsigned int fTime;                         // tempo in cui è stata terminata la visita sul nodo
     V data;                                     // dati satelliti del vertice
-    std::list <Vertex <V> *> * adjacencyList;   // lista di adiacenza del vertice
+    std::list <Edge<V> *> * adjacencyList;      // lista di adiacenza del vertice
     unsigned short int color;                   // colore vertice
     
     // Metodi Set
-    void setParent(Vertex<V> * newParent);
+    void setParent(Vertex <V> * newParent);
     void set_d(int new_d);
     void set_dTime(unsigned int new_dTime);
     void set_fTime(unsigned int new_fTime);
     void setData(V newData);
-    void setAdjacencyList(std::list <Vertex <V> *> * newAdjacencyList);
+    void setAdjacencyList(std::list <Edge <V> *> * newAdjacencyList);
     void setColor(unsigned short int newColor);
     
     // Metodi Get Privati
-    std::list <Vertex <V> *> * getAdjacencyList();
+    std::list <Edge <V> *> * getAdjacencyList();
     Vertex<V> * getParent();
     
     //Metodi Ulteriori
     void resetVertex();                                     // reset degli attributi del vertice
-    void addVertexToAdjacencyList(Vertex<V> * newVertex);   // aggiunge newVertex alla lista di adiacenza del vertice sul quale viene invocato
+    void addEdgeToAdjacencyList(Edge <V> * newEdge);      // aggiunge newEdge alla lista di adiacenza del vertice sul quale viene invocato
     
 public:
     // Costruttore
@@ -54,7 +56,7 @@ public:
         set_dTime(std::numeric_limits<unsigned int>::min());
         set_fTime(std::numeric_limits<unsigned int>::min());
         setData(data);
-        setAdjacencyList(new std::list<Vertex<V> *>);
+        setAdjacencyList(new std::list<Edge <V> *>);
         setColor(WHITE);
     }
     
@@ -79,7 +81,7 @@ template <class V> unsigned int Vertex<V>::currID = 0;
 
 
 // Implementazione Metodi Set
-template <class V> void Vertex<V>::setParent(Vertex<V> * newParent) {
+template <class V> void Vertex<V>::setParent(Vertex <V> * newParent) {
     this->parent = newParent;
 }
 
@@ -99,7 +101,7 @@ template <class V> void Vertex<V>::setData(V newData) {
     this->data = newData;
 }
 
-template <class V> void Vertex<V>::setAdjacencyList(std::list <Vertex <V> *> * newAdjacencyList) {
+template <class V> void Vertex<V>::setAdjacencyList(std::list <Edge <V> *> * newAdjacencyList) {
     this->adjacencyList = newAdjacencyList;
 }
 
@@ -113,7 +115,7 @@ template <class V> unsigned int Vertex<V>::getID() {
     return this->ID;
 }
 
-template <class V> Vertex<V> * Vertex<V>::getParent() {
+template <class V> Vertex <V> * Vertex<V>::getParent() {
     return this->parent;
 }
 
@@ -133,7 +135,7 @@ template <class V> V Vertex<V>::getData() {
     return this->data;
 }
 
-template <class V> std::list <Vertex <V> *> * Vertex<V>::getAdjacencyList() {
+template <class V> std::list <Edge <V> *> * Vertex<V>::getAdjacencyList() {
     return this->adjacencyList;
 }
 
@@ -150,8 +152,8 @@ template <class V> void Vertex<V>::resetVertex() {
     setColor(WHITE);
 }
 
-template <class V> void Vertex<V>::addVertexToAdjacencyList(Vertex<V> * newVertex) {
-    this->adjacencyList->push_back(newVertex);
+template <class V> void Vertex<V>::addEdgeToAdjacencyList(Edge <V> * newEdge) {
+    getAdjacencyList()->push_back(newEdge);
 }
 
 #endif /* Vertex_hpp */
