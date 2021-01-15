@@ -24,11 +24,11 @@ template <class V> class Vertex;
 template <class V> class Edge {
     template <class T> friend class Graph;
 private:
-    static unsigned int currID;     // contatore
-    const unsigned int ID;          // codice identificativo univoco dell'arco
-    Vertex<V> * source;             // puntatore al vertice sorgente
-    Vertex<V> * destination;        // puntatore al vertice destinazione
-    int weight;                     // peso (costo) dell'arco
+    static unsigned int currID;     // Contatore
+    const unsigned int ID;          // Codice identificativo univoco dell'arco
+    Vertex<V> * source;             // Puntatore al vertice sorgente
+    Vertex<V> * destination;        // Puntatore al vertice destinazione
+    int weight;                     // Peso (costo) dell'arco
     
     // Metodi Set
     void setSource(Vertex<V> * newSource);

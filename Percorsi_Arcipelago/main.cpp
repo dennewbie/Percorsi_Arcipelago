@@ -6,8 +6,6 @@
 //
 
 #include <iostream>
-//#include "Edge.hpp"
-//#include "Vertex.hpp"
 #include "Graph.hpp"
 
 int main() {
@@ -29,7 +27,7 @@ int main() {
     Edge<int> * tempEdge_8 = new Edge<int>(tempVertex_3, tempVertex_4, -1);
     Edge<int> * tempEdge_9 = new Edge<int>(tempVertex_4, tempVertex_5, 2);
     
-    Graph<int> tempGraph;
+//    Graph<int> tempGraph;
 //    tempGraph.addVertex(tempVertex_0);
 //    tempGraph.addVertex(tempVertex_1);
 //    tempGraph.addVertex(tempVertex_2);
@@ -50,8 +48,8 @@ int main() {
 //    tempGraph.getMaxPaths(tempVertex_1);
 //
 //
-//    std::vector<std::string> stringMaxPaths = tempGraph.getStringMaxPaths();
-//    for (auto it: stringMaxPaths) {
+//    std::vector<std::string> * stringMaxPaths = tempGraph.getStringMaxPaths();
+//    for (auto it: *stringMaxPaths) {
 //        std::cout << it;
 //    }
     return 0;

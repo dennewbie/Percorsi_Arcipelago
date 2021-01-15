@@ -21,15 +21,15 @@ template <class V> class Vertex {
     template <class T> friend class Graph;
     
 private:
-    static unsigned int currID;                 // contatore
-    const unsigned int ID;                      // codice identificativo univoco del vertice
-    Vertex<V> * parent;                         // pointer al padre
-    int d;                                      // stima inferiore del peso del cammino massimo tra nodo sorgente e destinazione
-    unsigned int dTime;                         // tempo in cui è stato scoperto il nodo (tempo inizio visita)
-    unsigned int fTime;                         // tempo in cui è stata terminata la visita sul nodo
-    V data;                                     // dati satelliti del vertice
-    std::list <Edge<V> *> * adjacencyList;      // lista di adiacenza del vertice
-    unsigned short int color;                   // colore vertice
+    static unsigned int currID;                 // Contatore
+    const unsigned int ID;                      // Codice identificativo univoco del vertice
+    Vertex<V> * parent;                         // Pointer al padre
+    int d;                                      // Stima inferiore del peso del cammino massimo tra nodo sorgente e destinazione
+    unsigned int dTime;                         // Tempo in cui è stato scoperto il nodo (tempo inizio visita)
+    unsigned int fTime;                         // Tempo in cui è stata terminata la visita sul nodo
+    V data;                                     // Dati satelliti del vertice
+    std::list <Edge<V> *> * adjacencyList;      // Lista di adiacenza del vertice
+    unsigned short int color;                   // Colore vertice
     
     // Metodi Set
     void setParent(Vertex <V> * newParent);
@@ -45,8 +45,8 @@ private:
     Vertex<V> * getParent();
     
     //Metodi Ulteriori
-    void resetVertex();                                     // reset degli attributi del vertice
-    void addEdgeToAdjacencyList(Edge <V> * newEdge);      // aggiunge newEdge alla lista di adiacenza del vertice sul quale viene invocato
+    void resetVertex();                                     // Reset degli attributi del vertice
+    void addEdgeToAdjacencyList(Edge <V> * newEdge);        // Aggiunge newEdge alla lista di adiacenza del vertice sul quale viene invocato
     
 public:
     // Costruttore
