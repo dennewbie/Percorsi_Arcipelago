@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <stack>
 #include "Vertex.hpp"
 #include "Edge.hpp"
 
@@ -39,6 +40,10 @@ private:
     void addVertex(Vertex<V> * vertexToAdd);    // Aggiunge il "vertexToAdd" al Grafo
     void addEdge(Edge<V> * edgeToAdd);          // Aggiunge l' "edgeToAdd"   al Grafo
     void resetVerticesProperties();             // Resetta le proprietà di tutti i vertici v del Grafo
+    std::stack<Vertex<V> *> getTopologicalOrderStack();
+    void DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack);
+    void relax(Vertex<V> * source, Vertex<V> * destination);
+    void getMaxPaths(Vertex<V> * source);
     
 public:
     // Costrutrore
@@ -108,6 +113,56 @@ template <class V> void Graph<V>::addEdge(Edge<V> * edgeToAdd) {
 
 template <class V> void Graph<V>::resetVerticesProperties() {
     for (auto & singleVertex: *(getVertices())) singleVertex->resetVertex();
+}
+
+template <class V> std::stack<Vertex<V> *> Graph<V>::getTopologicalOrderStack() {
+    std::stack<Vertex<V> *> stackDFS_topologicalOrder;
+    resetVerticesProperties();
+    
+    for (auto & singleNode: *(getVertices())) {
+        if (singleNode->getColor() == WHITE) {
+            DFS_visitTopologicalOrder(singleNode, &stackDFS_topologicalOrder);
+        }
+    }
+    
+    setTime(0);
+    return stackDFS_topologicalOrder;
+}
+
+template <class V> void Graph<V>::DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack) {
+    vertex->setColor(GRAY);
+    setTime(getTime() + 1);
+    vertex->set_dTime(getTime());
+    
+    for (auto & adjacentNodeToVertex: *(vertex->getAdjacencyList())) {
+        if (adjacentNodeToVertex->getColor() == WHITE) {
+            //            std::cout << "\n" << adjacentNodeToU->getData();
+            adjacentNodeToVertex->setParent(vertex);
+            DFS_visitTopologicalOrder(adjacentNodeToVertex, inputStack);
+        }
+    }
+    
+    vertex->setColor(BLACK);
+    setTime(getTime() + 1);
+    vertex->set_fTime(getTime());
+    inputStack->push(vertex);
+}
+
+template <class V> void Graph<V>::relax(Vertex<V> * source, Vertex<V> * destination) {
+    
+}
+
+template <class V> void Graph<V>::getMaxPaths(Vertex<V> * source) {
+    std::stack<Vertex<V> *> stackTopologicalOrder = getTopologicalOrderStack();
+    
+    while (!(stackTopologicalOrder.empty())) {
+        Vertex<V> * vertex = stackTopologicalOrder.top();
+        stackTopologicalOrder.pop();
+        
+        for (auto & adjacentNodeToVertex: *(vertex->getAdjacencyList())) {
+            
+        }
+    }
 }
 
 #endif /* Graph_hpp */
