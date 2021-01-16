@@ -16,6 +16,7 @@
 #include "Edge.hpp"
 
 template <class V> class Graph {
+    template <class T> friend class Archipelago;
 private:
     std::vector<Vertex<V> *> * vertices;        // Vector di Vertici
     std::vector<Edge<V> *> * edges;             // Vector di Archi
@@ -32,9 +33,9 @@ private:
     void setStringMaxCostPaths(std::vector<std::string> * newStringMaxPaths);
     
     // Metodi Get
-    std::vector<Vertex<V> *> * getVertices();
-    std::vector<Edge<V> *> * getEdges();
-    unsigned int getTime();
+    std::vector<Vertex<V> *> * getVertices();   // può andare pubblico
+    std::vector<Edge<V> *> * getEdges();        // può andare pubblico
+    unsigned int getTime();                     // può andare pubblico
     std::vector<std::string> * getStringMaxCostPaths();
 
     // Metodi Ulteriori Privati

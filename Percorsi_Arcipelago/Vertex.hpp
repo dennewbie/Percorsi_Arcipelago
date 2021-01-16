@@ -41,8 +41,8 @@ private:
     void setColor(unsigned short int newColor);
     
     // Metodi Get Privati
-    std::list <Edge <V> *> * getAdjacencyList();
-    Vertex<V> * getParent();
+    std::list <Edge <V> *> * getAdjacencyList();    // può andare pubblico
+    Vertex<V> * getParent();                        // può andare pubblico
     
     //Metodi Ulteriori Privati
     void resetVertex();                                     // Reset degli attributi del vertice
