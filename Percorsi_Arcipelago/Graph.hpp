@@ -244,13 +244,6 @@ template <class V> bool Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) 
     return true;
 }
 
-/*
-    N.B.
-    Qui capire se va usato il campo ID o il campo data, quando si costruisce la stringa col path.
-    Pensa se non vengono inseriti in ordine crescente come sulle fotocopie della traccia e quindi non puoi sfruttare gli ID
-    Se si può assumere che V sia sempre intero bene altrimenti con ID. Anche se alla fine basta andare a vedere quali ID
-    sono stati dati ai vertici; l'output è sempre giusto.
- */
 template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination) {
     std::stringstream pathFromSourceToDestination("", std::ios_base::app | std::ios_base::out);
 

@@ -125,14 +125,18 @@ public:
     // Metodi Ulteriori Pubblici
     void addIsland(Vertex<V> * newIsland);      // Permette di aggiungere una nuova isola all'arcipelago
     void addBridge(Edge<V> * newBridge);        // Permette di aggiungere un nuovo ponte all'arcipelago
-    bool calculateMaxCostPaths();               // Calcola i percorsi dal costo massimo da sorgente unica nell'arcipelago
+    bool calculateMaxCostPaths();               /*
+                                                    Calcola i percorsi dal costo massimo da sorgente unica nell'arcipelago.
+                                                    Se non è possibile calcolarli, restituisce false. Altrimenti restituisce true.
+                                                    Questo dipende rispettivamente dala presenza o meno di cicli di peso positivo.
+                                                 */
     void printMaxCostPaths();                   // Stampa i percorsi dal costo massimo da sorgente unica nell'arcipelago
-    void chooseSource(unsigned int source);         /*
-                                                        Permette all'utente di scegliere la sorgente
-                                                        (isola dell'arcipelago) a partire dalla quale
-                                                        calcolare i percorsi dal costo massimo verso ogni
-                                                        altra isola dell'arcipelago
-                                                     */
+    void chooseSource(unsigned int source);     /*
+                                                    Permette all'utente di scegliere la sorgente
+                                                    (isola dell'arcipelago) a partire dalla quale
+                                                    calcolare i percorsi dal costo massimo verso ogni
+                                                    altra isola dell'arcipelago
+                                                 */
     bool isFileStreamOpen();                    // Verifica se lo stream è aperto
 //    bool calculateMaxCostPaths_2();             // Come l'altra ma mediante Bellman-Ford
 };

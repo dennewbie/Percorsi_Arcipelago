@@ -7,13 +7,6 @@
 
 #include "Archipelago.hpp"
 
-/*
-    N.B:
-    Anche se fai tornare un ptr a un nodo per es. e lo metti a nullptr nel main per es.
-    Non cambia quello che sta memorizzato nella classe. Valutare se rendere pubblici i
-    metodi del tipo getParent(), getSource(), getDestination(), getVertices() e così via.
- */
-
 int main() {
 //    Vertex<int> * tempVertex_0 = new Vertex<int>(10);
 //    Vertex<int> * tempVertex_1 = new Vertex<int>(20);
@@ -63,7 +56,7 @@ int main() {
 //    for (auto it: *stringMaxPaths) {
 //        std::cout << it;
 //    }
-    const char * usrMenuMessage =   "\n\nBenvenuti nell'Arcipelago...\n\nLe isole e i ponti sono stati già caricati. "
+    const char * usrMenuMessage =   "\n\nBenvenuti nell'Arcipelago di Grapha-Nui...\n\nLe isole e i ponti sono stati già caricati. "
                                     "Inserisci l'isola a partire \ndalla quale vuoi calcolare i percorsi col costo massimo "
                                     "verso tutte le \naltre isole dell'arcipelago.\n\nDigita un numero da 0 a (N - 1) "
                                     "dove N è il numero delle isole totali \npresenti nel file che hai caricato.\n\nDigita "
