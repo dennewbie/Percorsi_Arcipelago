@@ -103,7 +103,7 @@ private:
     
 public:
     // Costruttore
-    Archipelago(std::string inputFilePath, unsigned int source) {
+    Archipelago(std::string inputFilePath) {
         setInputFilePath(inputFilePath);
         setInputFileStream(new std::ifstream);
         if (!(openInputFileStream())) {
@@ -113,10 +113,6 @@ public:
         
         setGraph(new Graph<V>);
         buidGraph();
-        
-        if (checkSource(source)) {
-            setSource(getGraph()->getVertices()->at(source));
-        }
     }
     
     // Distruttore
@@ -129,7 +125,7 @@ public:
     // Metodi Ulteriori Pubblici
     void addIsland(Vertex<V> * newIsland);      // Permette di aggiungere una nuova isola all'arcipelago
     void addBridge(Edge<V> * newBridge);        // Permette di aggiungere un nuovo ponte all'arcipelago
-    void calculateMaxCostPaths();               // Calcola i percorsi dal costo massimo da sorgente unica nell'arcipelago
+    bool calculateMaxCostPaths();               // Calcola i percorsi dal costo massimo da sorgente unica nell'arcipelago
     void printMaxCostPaths();                   // Stampa i percorsi dal costo massimo da sorgente unica nell'arcipelago
     void chooseSource(unsigned int source);         /*
                                                         Permette all'utente di scegliere la sorgente
@@ -137,6 +133,8 @@ public:
                                                         calcolare i percorsi dal costo massimo verso ogni
                                                         altra isola dell'arcipelago
                                                      */
+    bool isFileStreamOpen();                    // Verifica se lo stream è aperto
+//    bool calculateMaxCostPaths_2();             // Come l'altra ma mediante Bellman-Ford
 };
 
 
@@ -235,30 +233,43 @@ template <class V> void Archipelago<V>::addBridge(Edge<V> * newBridge) {
     getGraph()->addEdge(newBridge);
 }
 
-template <class V> void Archipelago<V>::calculateMaxCostPaths() {
-    if (!(getSource())) {
+template <class V> bool Archipelago<V>::calculateMaxCostPaths() {
+    if (!(getSource()) || !(checkSource(getSource()->getID()))) {
         printError(invalidUserSourceIsland);
-        return;
+        return false;
     }
     
-    getGraph()->getMaxCostPathsFromSource(getSource());
+    if (!(getGraph()->getMaxCostPathsFromSource(getSource()))) return false;
+    return true;
 }
+//
+//template <class V> bool Archipelago<V>::calculateMaxCostPaths_2() {
+//    if (!(getSource()) || !(checkSource(getSource()->getID()))) {
+//        printError(invalidUserSourceIsland);
+//        return false;
+//    }
+//
+//    if (!(getGraph()->bellmanFord(getSource()))) return false;
+//    return true;
+//}
 
 template <class V> void Archipelago<V>::printMaxCostPaths() {
     for (auto it: *(getGraph()->getStringMaxCostPaths())) std::cout << it << std::endl;
 }
 
 template <class V> void Archipelago<V>::chooseSource(unsigned int source) {
+    setSource(nullptr);
     if (checkSource(source)) setSource(getGraph()->getVertices()->at(source));
 }
 
 template <class V> bool Archipelago<V>::checkSource(unsigned int source) {
-    if (source >= getGraph()->getVertices()->size()) {
-        printError(invalidUserSourceIsland);
-        return false;
-    }
+    if (source >= getGraph()->getVertices()->size()) return false;
     
     return true;
+}
+
+template <class V> bool Archipelago<V>::isFileStreamOpen() {
+    return (getInputFileStream()->is_open()) ? true : false;
 }
 
 #endif /* Archipelago_hpp */

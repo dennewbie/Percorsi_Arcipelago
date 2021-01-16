@@ -115,8 +115,9 @@ public:
         // Aggiunge il "vertexToAdd" al Grafo
     void addEdge(Edge<V> * edgeToAdd);
         // Aggiunge l' "edgeToAdd"   al Grafo
-    void getMaxCostPathsFromSource(Vertex<V> * source);
+    bool getMaxCostPathsFromSource(Vertex<V> * source);
         // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
+//    bool bellmanFord(Vertex<V> * source);
 };
 
 
@@ -174,9 +175,9 @@ template <class V> std::stack<Vertex<V> *> Graph<V>::getTopologicalOrderStack() 
     std::stack<Vertex<V> *> stackDFS_topologicalOrder;
     resetVerticesProperties();
     
-    for (auto & singleNode: *(getVertices())) {
-        if (singleNode->getColor() == WHITE) {
-            DFS_visitTopologicalOrder(singleNode, &stackDFS_topologicalOrder);
+    for (auto & singleVertex: *(getVertices())) {
+        if (singleVertex->getColor() == WHITE) {
+            DFS_visitTopologicalOrder(singleVertex, &stackDFS_topologicalOrder);
         }
     }
     
@@ -214,7 +215,7 @@ template <class V> void Graph<V>::relax(Edge<V> * edgeToRelax) {
     }
 }
 
-template <class V> void Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) {
+template <class V> bool Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) {
     getStringMaxCostPaths()->clear();
     setTime(0);
     std::stack<Vertex<V> *> stackTopologicalOrder = getTopologicalOrderStack();
@@ -230,10 +231,21 @@ template <class V> void Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) 
         }
     }
     
+    for (auto & singleEdge: *(getEdges())) {
+        Vertex<V> * u = singleEdge->getSource();
+        Vertex<V> * v = singleEdge->getDestination();
+        int weight = singleEdge->getWeight();
+        
+        if (u->get_d() + weight == (std::numeric_limits<int>::min()) + weight) continue;
+        if (v->get_d() < u->get_d() + weight) return false;
+    }
+    
     for (auto & singleNode: *(getVertices())) getMaxCostPathToDestination(source, singleNode);
+    return true;
 }
 
 /*
+    N.B.
     Qui capire se va usato il campo ID o il campo data, quando si costruisce la stringa col path.
     Pensa se non vengono inseriti in ordine crescente come sulle fotocopie della traccia e quindi non puoi sfruttare gli ID
     Se si può assumere che V sia sempre intero bene altrimenti con ID. Anche se alla fine basta andare a vedere quali ID
@@ -253,7 +265,7 @@ template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source
     
     Vertex<V> * current = destination;
 
-    if (current->getParent() == nullptr) {
+    if (current->getParent() == nullptr || destination->get_d() == std::numeric_limits<int>::min()) {
         std::string temp = "->";
         temp.append(std::to_string(current->getID()));
         stringMaxPathsStack.push(temp);
@@ -276,5 +288,35 @@ template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source
     pathFromSourceToDestination << std::endl << std::endl;
     getStringMaxCostPaths()->push_back(pathFromSourceToDestination.str());
 }
+
+//
+//template <class V> bool Graph<V>::bellmanFord(Vertex<V> * source) {
+//    getStringMaxCostPaths()->clear();
+//    resetVerticesProperties();
+//    setTime(0);
+//    source->set_d(0);
+//    source->setParent(nullptr);
+//
+//    int size = (int) getVertices()->size();
+//
+//    for (int i = 0; i < size - 1; i++) {
+//        for (auto & singleEdge: *(getEdges())) {
+//            relax(singleEdge);
+//        }
+//    }
+//
+//    for (auto & singleEdge: *(getEdges())) {
+//        Vertex<V> * u = singleEdge->getSource();
+//        Vertex<V> * v = singleEdge->getDestination();
+//        int weight = singleEdge->getWeight();
+//
+//        if (u->get_d() + weight == (std::numeric_limits<int>::min()) + weight) continue;
+//        if (v->get_d() < u->get_d() + weight) return false;
+//    }
+//
+//    source->setParent(nullptr);
+//    for (auto & singleNode: *(getVertices())) getMaxCostPathToDestination(source, singleNode);
+//    return true;
+//}
 
 #endif /* Graph_hpp */
