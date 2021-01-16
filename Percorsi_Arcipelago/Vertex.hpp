@@ -11,6 +11,7 @@
 #include <list>
 #include <limits>
 
+// Identificazione Colore Vertici del Grafo medinte associazione di valori numerici interi non negativi
 #define WHITE 1
 #define GRAY  2
 #define BLACK 3
@@ -41,11 +42,11 @@ private:
     void setColor(unsigned short int newColor);
     
     // Metodi Get Privati
-    std::list <Edge <V> *> * getAdjacencyList();    // può andare pubblico
-    Vertex<V> * getParent();                        // può andare pubblico
+    std::list <Edge <V> *> * getAdjacencyList();
+//    Vertex<V> * getParent();
     
     //Metodi Ulteriori Privati
-    void resetVertex();                                     // Reset degli attributi del vertice
+    void resetVertex();                                     // Reset degli attributi "di visita" del vertice
     void addEdgeToAdjacencyList(Edge <V> * newEdge);        // Aggiunge newEdge alla lista di adiacenza del vertice sul quale viene invocato
     
 public:
@@ -63,11 +64,13 @@ public:
     // Distruttore
     ~Vertex() {
         delete getAdjacencyList();
-//        this->currID--; altrimenti abbiamo stessi ID per più vertici
     }
     
     // Metodi Get Pubblici
+    
+    
     unsigned int getID();
+    Vertex<V> * getParent();
     int get_d();
     unsigned int get_dTime();
     unsigned int get_fTime();

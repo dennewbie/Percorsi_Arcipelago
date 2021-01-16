@@ -8,21 +8,11 @@
 #ifndef Edge_hpp
 #define Edge_hpp
 
-//#include "Vertex.hpp"
 template <class V> class Vertex;
-    /*
-        N.B. 1:
-        Testing con questa dichiarazione se va bene oppure con #include di Vertex anche qui.
-        In quest'ultimo caso valutare cosa importare in Graph
-     */
-
-    /*
-        N.B. 2:
-        Non è possibile usare i Variable Template se non a partire dal C++ 14
-     */
 
 template <class V> class Edge {
-    template <class T> friend class Graph;
+    // Non più friend di Graph: non serve.
+//    template <class T> friend class Graph;
 private:
     static unsigned int currID;     // Contatore
     const unsigned int ID;          // Codice identificativo univoco dell'arco
@@ -36,8 +26,8 @@ private:
     void setWeight(int newWeight);
     
     // Metodi Get Privati
-    Vertex<V> * getSource();
-    Vertex<V> * getDestination();
+//    Vertex<V> * getSource();
+//    Vertex<V> * getDestination();
     
 public:
     // Costruttore
@@ -52,6 +42,8 @@ public:
     
     // Metodi Get Pubblici
     unsigned int getID();
+    Vertex<V> * getSource();
+    Vertex<V> * getDestination();
     int getWeight();
 };
 

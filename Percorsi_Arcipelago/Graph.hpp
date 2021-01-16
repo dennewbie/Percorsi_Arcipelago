@@ -16,7 +16,8 @@
 #include "Edge.hpp"
 
 template <class V> class Graph {
-    template <class T> friend class Archipelago;
+    // Non più friend di Archipelago: non serve.
+//    template <class T> friend class Archipelago;
 private:
     std::vector<Vertex<V> *> * vertices;        // Vector di Vertici
     std::vector<Edge<V> *> * edges;             // Vector di Archi
@@ -32,17 +33,17 @@ private:
     void setTime(unsigned int newTime);
     void setStringMaxCostPaths(std::vector<std::string> * newStringMaxPaths);
     
-    // Metodi Get
-    std::vector<Vertex<V> *> * getVertices();   // può andare pubblico
-    std::vector<Edge<V> *> * getEdges();        // può andare pubblico
-    unsigned int getTime();                     // può andare pubblico
-    std::vector<std::string> * getStringMaxCostPaths();
+    // Metodi Get Privati
+//    std::vector<Vertex<V> *> * getVertices();           // può andare pubblico
+//    std::vector<Edge<V> *> * getEdges();                // può andare pubblico
+//    unsigned int getTime();                             // può andare pubblico
+//    std::vector<std::string> * getStringMaxCostPaths(); // può andare pubblico
 
     // Metodi Ulteriori Privati
-    void addVertex(Vertex<V> * vertexToAdd);
-        // Aggiunge il "vertexToAdd" al Grafo
-    void addEdge(Edge<V> * edgeToAdd);
-        // Aggiunge l' "edgeToAdd"   al Grafo
+//    void addVertex(Vertex<V> * vertexToAdd);
+//        // Aggiunge il "vertexToAdd" al Grafo
+//    void addEdge(Edge<V> * edgeToAdd);
+//        // Aggiunge l' "edgeToAdd"   al Grafo
     void resetVerticesProperties();
         // Resetta le proprietà di tutti i vertici v del Grafo
     std::stack<Vertex<V> *> getTopologicalOrderStack();
@@ -51,8 +52,8 @@ private:
         // Visita per generare l'ordinamento topologico
     void relax(Edge<V> * edgeToRelax);
         // Verifica se la stima di cammino di peso massimo può essere aggiornata
-    void getMaxCostPathsFromSource(Vertex<V> * source);
-        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
+//    void getMaxCostPathsFromSource(Vertex<V> * source);
+//        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
     void getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination);
         // Calcola il cammino di peso massimo da una determinata sorgente a una determinata destinazione
     
@@ -102,6 +103,20 @@ public:
 //        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
 //    void getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination);
 //        // Calcola il cammino di peso massimo da una determinata sorgente a una determinata destinazione
+    
+    // Metodi Get Pubblici
+    std::vector<Vertex<V> *> * getVertices();
+    std::vector<Edge<V> *> * getEdges();
+    unsigned int getTime();
+    std::vector<std::string> * getStringMaxCostPaths();
+    
+    // Metodi Ulteriori Pubblici
+    void addVertex(Vertex<V> * vertexToAdd);
+        // Aggiunge il "vertexToAdd" al Grafo
+    void addEdge(Edge<V> * edgeToAdd);
+        // Aggiunge l' "edgeToAdd"   al Grafo
+    void getMaxCostPathsFromSource(Vertex<V> * source);
+        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
 };
 
 
@@ -165,7 +180,6 @@ template <class V> std::stack<Vertex<V> *> Graph<V>::getTopologicalOrderStack() 
         }
     }
     
-    setTime(0);
     return stackDFS_topologicalOrder;
 }
 
@@ -201,6 +215,8 @@ template <class V> void Graph<V>::relax(Edge<V> * edgeToRelax) {
 }
 
 template <class V> void Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) {
+    getStringMaxCostPaths()->clear();
+    setTime(0);
     std::stack<Vertex<V> *> stackTopologicalOrder = getTopologicalOrderStack();
     source->set_d(0);
     source->setParent(nullptr);
@@ -217,8 +233,12 @@ template <class V> void Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) 
     for (auto & singleNode: *(getVertices())) getMaxCostPathToDestination(source, singleNode);
 }
 
-// Qui capire se va usato il campo ID o il campo data, quando si costruisce la stringa col path
-// Pensa se non vengono inseriti in ordine crescente come sulle fotocopie della traccia e quindi non puoi sfruttare gli ID
+/*
+    Qui capire se va usato il campo ID o il campo data, quando si costruisce la stringa col path.
+    Pensa se non vengono inseriti in ordine crescente come sulle fotocopie della traccia e quindi non puoi sfruttare gli ID
+    Se si può assumere che V sia sempre intero bene altrimenti con ID. Anche se alla fine basta andare a vedere quali ID
+    sono stati dati ai vertici; l'output è sempre giusto.
+ */
 template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination) {
     std::stringstream pathFromSourceToDestination("", std::ios_base::app | std::ios_base::out);
 
@@ -246,14 +266,14 @@ template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source
         }
     }
     
-    pathFromSourceToDestination << "\n------------------------------\n" << source->getID();
+    pathFromSourceToDestination << "------------------------------" << std::endl << source->getID();
     
     while (!(stringMaxPathsStack.empty())) {
         pathFromSourceToDestination << stringMaxPathsStack.top();
         stringMaxPathsStack.pop();
     }
     
-    pathFromSourceToDestination << "\n\n";
+    pathFromSourceToDestination << std::endl << std::endl;
     getStringMaxCostPaths()->push_back(pathFromSourceToDestination.str());
 }
 

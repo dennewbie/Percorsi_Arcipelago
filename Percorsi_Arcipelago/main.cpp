@@ -5,7 +5,6 @@
 //  Created by Denny Caruso on 14/01/21.
 //
 
-#include <iostream>
 #include "Archipelago.hpp"
 
 /*
@@ -33,7 +32,7 @@ int main() {
 //    Edge<int> * tempEdge_7 = new Edge<int>(tempVertex_3, tempVertex_5, 1);
 //    Edge<int> * tempEdge_8 = new Edge<int>(tempVertex_3, tempVertex_4, -1);
 //    Edge<int> * tempEdge_9 = new Edge<int>(tempVertex_4, tempVertex_5, 2);
-    
+//
 //    Graph<int> tempGraph;
 //    tempGraph.addVertex(tempVertex_0);
 //    tempGraph.addVertex(tempVertex_1);
@@ -53,18 +52,23 @@ int main() {
 //    tempGraph.addEdge(tempEdge_8);
 //    tempGraph.addEdge(tempEdge_9);
 //    tempGraph.getMaxCostPathsFromSource(tempVertex_1);
-    
+//
 //    std::vector<Vertex<int> *> * vettore = tempGraph.getVertices();
 //    vettore->clear();
-//
-//    tempGraph.getTime();
-//
+
+//    tempGraph.getVertices()->clear();
+//    tempGraph.getVertices()->push_back(tempVertex_0);
+
 //    std::vector<std::string> * stringMaxPaths = tempGraph.getStringMaxCostPaths();
 //    for (auto it: *stringMaxPaths) {
 //        std::cout << it;
 //    }
     
-    Archipelago<int> tempArchipelago = Archipelago<int>("input.txt", 0);
+    Archipelago<int> tempArchipelago = Archipelago<int>("input.txt", 4);
+    tempArchipelago.calculateMaxCostPaths();
+    tempArchipelago.printMaxCostPaths();
+    std::cout << "\n\n\n";
+    tempArchipelago.chooseSource(3);
     tempArchipelago.calculateMaxCostPaths();
     tempArchipelago.printMaxCostPaths();
     return 0;

@@ -5,15 +5,75 @@
 //  Created by Denny Caruso on 15/01/21.
 //
 
+/*
+    *************************************************************************************************
+    *                                                                                               *
+    *                               Percorsi nell'Arcipelago                                        *
+    *                                                                                               *
+    *   Dopo il terribile terremoto del Dicembre 2019, a seguito di ingenti investimenti economici, *
+    *   la regina dell'arcipelago di Grapha-Nui è riuscita a ripristinare i collegamenti tra le     *
+    *   isole. È ora necessario incentivare il turismo nell’arcipelago per rimpinguare le casse     *
+    *   del governo ed a tal fine il Primo Ministro vuole sapere quali collegamenti tra le isole    *  
+    *   pubblicizzare maggiormente.                                                                 *
+    *   Viene nuovamente convocata la famosa consulente informatica                                 *
+    *   Ros Walker con il compito di calcolare i percorsi che massimizzano la soddisfazione dei     *
+    *   turisti, partendo da una generica isola verso tutte le altre isole. Ros ha a disposizione   *
+    *   la piantina dell’arcipelago con la rete di collegamenti tra le isole. Per ogni              *
+    *   collegamento la piantina specifica la direzione ed un valore (anche negativo) che misura    *
+    *   la qualità del collegamento.                                                                *
+    *                                                                                               *
+    *   Dati di input:                                                                              *
+    *   È assegnato un file di testo contenente nel primo rigo due interi separati da uno spazio:   *
+    *   il numero N delle isole (numerate da 0 ad N-1) ed il numero P dei ponti.                    *
+    *   I successivi P righi contengono ciascuno tre numeri I1, I2 e Q per indicare che è           *
+    *   possibile raggiungere l’isola I2 dall’isola I1 dove Q rappresenta la qualità del            *
+    *   collegamento.                                                                               *
+    *                                                                                               *
+    *   Dati di output                                                                              *
+    *   Determinare i percorsi con la massima qualità totale tra l’isola sorgente e tutte le        *
+    *   altre isole.                                                                                *
+    *                                                                                               *
+    *   Assunzioni                                                                                  *
+    *   2 ≤ N ≤ 1000                                                                                *
+    *   1 ≤ P ≤ 10000                                                                               *
+    *   Q[i] ∈ Z per ogni isola                                                                     *
+    *                                                                                               *
+    *   Esempio:                                                                                    *
+    *   input.txt                                                                                   *
+    *   6 10                                                                                        *
+    *   0 1 5                                                                                       *
+    *   0 2 3                                                                                       *
+    *   1 3 6                                                                                       *
+    *   1 2 2                                                                                       *
+    *   2 4 4                                                                                       *
+    *   2 5 2                                                                                       *
+    *   2 3 7                                                                                       *
+    *   3 5 1                                                                                       *
+    *   3 4 -1                                                                                      *
+    *   4 5 -2                                                                                      *
+    *   Output (partendo dall’isola 1):                                                             *
+    *   1->0 −∞                                                                                     *
+    *   1->1 0                                                                                      *
+    *   1->2 2                                                                                      *
+    *   1->3 9                                                                                      *
+    *   1->4 8                                                                                      *
+    *   1->5 10                                                                                     *
+    *                                                                                               *
+    *************************************************************************************************
+ */
+
 #ifndef Archipelago_hpp
 #define Archipelago_hpp
 
 #include "Graph.hpp"
 #include <iostream>
 #include <fstream>
-#define streamNotOpenSuccessfully 100
-#define invalidUserSourceIsland 200
-
+#define streamNotOpenSuccessfully 100   //  Codice di errore relativo alla mancata apertura dello stream di input
+#define invalidUserSourceIsland 200     /*
+                                            Codice di errore relativo alla scelta non valide di un isola sorgente
+                                            da parte dell'utente
+                                        */
+                                            
 template <class V> class Archipelago {
 private:
     Graph<V> * graph;
@@ -26,20 +86,20 @@ private:
     void setSource(Vertex<V> * newSource);
     void setInputFilePath(std::string newInputFilePath);
     void setInputFileStream(std::ifstream * newInputFileStream);
-    bool checkSource(unsigned int source);
     
     // Metodi Get Privati
-    Graph<V> * getGraph();          // può andare pubblico
-    Vertex<V> * getSource();        // può andare pubblico
+    Graph<V> * getGraph();
+    Vertex<V> * getSource();        
     std::string getInputFilePath();
     std::ifstream * getInputFileStream();
     
     // Metodi Ulteriori Privati
-    void printError(unsigned short int errorCode);
-    bool openInputFileStream();
-    void closeInputFileStream();
-    void buidGraph();
-    void chooseSource(unsigned int source);
+    void printError(unsigned short int errorCode);  // Stampa gli errori che possono verificarsi
+    bool openInputFileStream();                     // Apre lo stream di input
+    void closeInputFileStream();                    // Chiude lo stream di input
+    void buidGraph();                               // Costruisce il grafo rappresentante l'arcipelago
+    
+    bool checkSource(unsigned int source);          // Verifica se la sorgente scelta dall'utente è valida
     
 public:
     // Costruttore
@@ -67,10 +127,16 @@ public:
     }
     
     // Metodi Ulteriori Pubblici
-    void addIsland(Vertex<V> * newIsland);
-    void addBridge(Edge<V> * newBridge);
-    void calculateMaxCostPaths();
-    void printMaxCostPaths();
+    void addIsland(Vertex<V> * newIsland);      // Permette di aggiungere una nuova isola all'arcipelago
+    void addBridge(Edge<V> * newBridge);        // Permette di aggiungere un nuovo ponte all'arcipelago
+    void calculateMaxCostPaths();               // Calcola i percorsi dal costo massimo da sorgente unica nell'arcipelago
+    void printMaxCostPaths();                   // Stampa i percorsi dal costo massimo da sorgente unica nell'arcipelago
+    void chooseSource(unsigned int source);         /*
+                                                        Permette all'utente di scegliere la sorgente
+                                                        (isola dell'arcipelago) a partire dalla quale
+                                                        calcolare i percorsi dal costo massimo verso ogni
+                                                        altra isola dell'arcipelago
+                                                     */
 };
 
 
@@ -114,13 +180,13 @@ template <class V> std::ifstream * Archipelago<V>::getInputFileStream() {
 template <class V> void Archipelago<V>::printError(unsigned short int errorCode) {
     switch (errorCode) {
         case streamNotOpenSuccessfully:
-            std::cout << "\nInput Stream Not Open Successfully...\n";
+            std::cout << std::endl << "Input Stream Not Open Successfully..." << std::endl;
             break;
         case invalidUserSourceIsland:
-            std::cout << "\nSource island not valid. Please try again...\n";
+            std::cout << std::endl << "Source island not valid. Please try again..." << std::endl;
             break;
         default:
-            std::cout << "\nGeneric Error...\n";
+            std::cout << std::endl << "Generic Error..." << std::endl;
             break;
     }
 }
