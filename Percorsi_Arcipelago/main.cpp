@@ -56,7 +56,7 @@ int main() {
 //    for (auto it: *stringMaxPaths) {
 //        std::cout << it;
 //    }
-    const char * usrMenuMessage =   "\n\nBenvenuti nell'Arcipelago di Grapha-Nui...\n\nLe isole e i ponti sono stati già caricati. "
+    const char * usrMenuMessage =   "\n\nBenvenuti nell'Arcipelago di Grapha-Nui...\n\nLe isole e i ponti verranno caricati a breve. "
                                     "Inserisci l'isola a partire \ndalla quale vuoi calcolare i percorsi col costo massimo "
                                     "verso tutte le \naltre isole dell'arcipelago.\n\nDigita un numero da 0 a (N - 1) "
                                     "dove N è il numero delle isole totali \npresenti nel file che hai caricato.\n\nDigita "
@@ -67,7 +67,7 @@ int main() {
     unsigned int usrSourceIsland;
     char usrContinue;
     
-    Archipelago<int> tempArchipelago = Archipelago<int>("input.txt");
+    Archipelago<unsigned int> tempArchipelago = Archipelago<unsigned int>("input_2.txt");
     
     do {
         std::cout << usrMenuMessage;

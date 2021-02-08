@@ -8,6 +8,7 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
+//#include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -21,7 +22,7 @@ template <class V> class Graph {
 private:
     std::vector<Vertex<V> *> * vertices;        // Vector di Vertici
     std::vector<Edge<V> *> * edges;             // Vector di Archi
-    unsigned int time;                          // Tempo (usato come contatore nelle visite)
+    unsigned int time;                          // Tempo (per segnare tempi di inizio e fine delle visite)
     std::vector<std::string> * stringMaxCostPaths;  /*
                                                      Puntatore a Vector di stringhe, dove ogni stringa contiene il percorso
                                                      con la massima qualità tra il nodo sorgente e un nodo destinazione
@@ -49,7 +50,7 @@ private:
     std::stack<Vertex<V> *> getTopologicalOrderStack();
         // Restituisce uno stack contenente i vertici ordinati con l'ordinamento topologico
     void DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack);
-        // Visita per generare l'ordinamento topologico
+        // Visita DFS usata per generare l'ordinamento topologico
     void relax(Edge<V> * edgeToRelax);
         // Verifica se la stima di cammino di peso massimo può essere aggiornata
 //    void getMaxCostPathsFromSource(Vertex<V> * source);
@@ -249,7 +250,7 @@ template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source
 
     std::stack<std::string> stringMaxPathsStack;
     if (destination->get_d() == std::numeric_limits<int>::min()) {
-        stringMaxPathsStack.push("-∞");
+        stringMaxPathsStack.push("-INF");
     } else {
         stringMaxPathsStack.push(std::to_string(destination->get_d()));
     }
@@ -281,6 +282,24 @@ template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source
     pathFromSourceToDestination << std::endl << std::endl;
     getStringMaxCostPaths()->push_back(pathFromSourceToDestination.str());
 }
+
+//
+//template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination) {
+//    static std::stringstream pathFromSourceToDestination("", std::ios_base::app | std::ios_base::out);
+//
+//    Vertex<V> * current = destination;
+//    if (current == source) {
+//        pathFromSourceToDestination << std::string(std::to_string(source->getID())) << "->";
+//    } else if (current->getParent() == nullptr) {
+//        pathFromSourceToDestination << std::string(std::to_string(current->getID())) << "->" << std::string(std::to_string(current->getID())) << ": ∞\n";
+//    } else {
+//        getMaxCostPathToDestination(source, destination->getParent());
+//        pathFromSourceToDestination << std::string(std::to_string(current->getID())) << "->";
+//    }
+//
+//    std::cout << "here\n";
+//}
+
 
 //
 //template <class V> bool Graph<V>::bellmanFord(Vertex<V> * source) {

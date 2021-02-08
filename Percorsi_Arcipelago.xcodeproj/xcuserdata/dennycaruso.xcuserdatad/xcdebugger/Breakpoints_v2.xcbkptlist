@@ -52,5 +52,85 @@
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85F3474B-081F-47F3-9839-C6275A73A347"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Percorsi_Arcipelago/Graph.hpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "getMaxCostPathToDestination(source, destination)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "41080C56-A040-4763-8A95-8A4191186423"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Percorsi_Arcipelago/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "main()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74D8AE6A-BA9C-43D1-80E7-82A29AF05D65"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Percorsi_Arcipelago/Archipelago.hpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "printMaxCostPaths()"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "74D8AE6A-BA9C-43D1-80E7-82A29AF05D65 - 401b79f5e8357464"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Archipelago&lt;unsigned int&gt;::printMaxCostPaths()"
+                  moduleName = "Percorsi_Arcipelago"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dennycaruso/Desktop/ASD/progetto/esercizio_2/Percorsi_Arcipelago/Percorsi_Arcipelago/Archipelago.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "264"
+                  endingLineNumber = "264"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "74D8AE6A-BA9C-43D1-80E7-82A29AF05D65 - 401b79f5e8357464"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Archipelago&lt;unsigned int&gt;::printMaxCostPaths()"
+                  moduleName = "Percorsi_Arcipelago"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dennycaruso/Desktop/ASD/progetto/esercizio_2/Percorsi_Arcipelago/Percorsi_Arcipelago/Archipelago.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "264"
+                  endingLineNumber = "264"
+                  offsetFromSymbolStart = "89">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

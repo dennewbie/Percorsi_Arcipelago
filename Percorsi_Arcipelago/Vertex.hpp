@@ -67,8 +67,6 @@ public:
     }
     
     // Metodi Get Pubblici
-    
-    
     unsigned int getID();
     Vertex<V> * getParent();
     int get_d();

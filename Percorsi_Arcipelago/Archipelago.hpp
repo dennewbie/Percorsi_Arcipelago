@@ -27,7 +27,7 @@
     *   il numero N delle isole (numerate da 0 ad N-1) ed il numero P dei ponti.                    *
     *   I successivi P righi contengono ciascuno tre numeri I1, I2 e Q per indicare che è           *
     *   possibile raggiungere l’isola I2 dall’isola I1 dove Q rappresenta la qualità del            *
-    *   collegamento.                                                                               *
+    *   collegamento. I collegamenti tra le isole non danno origine a cicli.                        *
     *                                                                                               *
     *   Dati di output                                                                              *
     *   Determinare i percorsi con la massima qualità totale tra l’isola sorgente e tutte le        *
@@ -36,7 +36,7 @@
     *   Assunzioni                                                                                  *
     *   2 ≤ N ≤ 1000                                                                                *
     *   1 ≤ P ≤ 10000                                                                               *
-    *   Q[i] ∈ Z per ogni isola                                                                     *
+    *   Q[i] ∈ Z per ogni collegamento                                                              *
     *                                                                                               *
     *   Esempio:                                                                                    *
     *   input.txt                                                                                   *
@@ -70,10 +70,10 @@
 #include <fstream>
 #define streamNotOpenSuccessfully 100   //  Codice di errore relativo alla mancata apertura dello stream di input
 #define invalidUserSourceIsland 200     /*
-                                            Codice di errore relativo alla scelta non valide di un isola sorgente
+                                            Codice di errore relativo alla scelta non valida di un isola sorgente
                                             da parte dell'utente
                                         */
-                                            
+                                        
 template <class V> class Archipelago {
 private:
     Graph<V> * graph;
@@ -97,8 +97,7 @@ private:
     void printError(unsigned short int errorCode);  // Stampa gli errori che possono verificarsi
     bool openInputFileStream();                     // Apre lo stream di input
     void closeInputFileStream();                    // Chiude lo stream di input
-    void buidGraph();                               // Costruisce il grafo rappresentante l'arcipelago
-    
+    void buildGraph();                              // Costruisce il grafo rappresentante l'arcipelago
     bool checkSource(unsigned int source);          // Verifica se la sorgente scelta dall'utente è valida
     
 public:
@@ -112,7 +111,7 @@ public:
         }
         
         setGraph(new Graph<V>);
-        buidGraph();
+        buildGraph();
     }
     
     // Distruttore
@@ -204,7 +203,9 @@ template <class V> void Archipelago<V>::closeInputFileStream() {
     getInputFileStream()->close();
 }
 
-template <class V> void Archipelago<V>::buidGraph() {
+// V templato è inutile, ma siccome è la classe che risolve il problema e il problema presenta queste specifiche, allora va bene.
+// Il problema non specifica i dati contenuti in ciascuna isola
+template <class V> void Archipelago<V>::buildGraph() {
     while (!(getInputFileStream()->is_open())) {
         openInputFileStream();
         if (!(getInputFileStream()->is_open())) printError(streamNotOpenSuccessfully);
@@ -213,7 +214,7 @@ template <class V> void Archipelago<V>::buidGraph() {
     int nIsland, nBridge;
     *inputFileStream >> nIsland >> nBridge;
     
-    for (auto i = 0; i < nIsland; i++) {
+    for (unsigned int i = 0; i < nIsland; i++) {
         Vertex<V> * newIsland = new Vertex<V>(i);
         addIsland(newIsland);
     }
@@ -268,6 +269,7 @@ template <class V> void Archipelago<V>::chooseSource(unsigned int source) {
 
 template <class V> bool Archipelago<V>::checkSource(unsigned int source) {
     if (source >= getGraph()->getVertices()->size()) return false;
+    if (source < 0) return false;
     
     return true;
 }

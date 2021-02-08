@@ -36,7 +36,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/dennycaruso/Desktop/esercizio_2/Percorsi_Arcipelago/Percorsi_Arcipelago"
+      customWorkingDirectory = "/Users/dennycaruso/Desktop/ASD/progetto/esercizio_2/Percorsi_Arcipelago/Percorsi_Arcipelago"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
