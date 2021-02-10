@@ -8,7 +8,6 @@
 #ifndef Graph_hpp
 #define Graph_hpp
 
-//#include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -17,8 +16,6 @@
 #include "Edge.hpp"
 
 template <class V> class Graph {
-    // Non più friend di Archipelago: non serve.
-//    template <class T> friend class Archipelago;
 private:
     std::vector<Vertex<V> *> * vertices;        // Vector di Vertici
     std::vector<Edge<V> *> * edges;             // Vector di Archi
@@ -34,17 +31,7 @@ private:
     void setTime(unsigned int newTime);
     void setStringMaxCostPaths(std::vector<std::string> * newStringMaxPaths);
     
-    // Metodi Get Privati
-//    std::vector<Vertex<V> *> * getVertices();           // può andare pubblico
-//    std::vector<Edge<V> *> * getEdges();                // può andare pubblico
-//    unsigned int getTime();                             // può andare pubblico
-//    std::vector<std::string> * getStringMaxCostPaths(); // può andare pubblico
-
     // Metodi Ulteriori Privati
-//    void addVertex(Vertex<V> * vertexToAdd);
-//        // Aggiunge il "vertexToAdd" al Grafo
-//    void addEdge(Edge<V> * edgeToAdd);
-//        // Aggiunge l' "edgeToAdd"   al Grafo
     void resetVerticesProperties();
         // Resetta le proprietà di tutti i vertici v del Grafo
     std::stack<Vertex<V> *> getTopologicalOrderStack();
@@ -53,8 +40,6 @@ private:
         // Visita DFS usata per generare l'ordinamento topologico
     void relax(Edge<V> * edgeToRelax);
         // Verifica se la stima di cammino di peso massimo può essere aggiornata
-//    void getMaxCostPathsFromSource(Vertex<V> * source);
-//        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
     void getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination);
         // Calcola il cammino di peso massimo da una determinata sorgente a una determinata destinazione
     
@@ -80,31 +65,6 @@ public:
         delete getStringMaxCostPaths();
     }
     
-    // Per testarli mettendolo pubblici
-//    // Metodi Get
-//    std::vector<Vertex<V> *> * getVertices();
-//    std::vector<Edge<V> *> * getEdges();
-//    unsigned int getTime();
-//    std::vector<std::string> * getStringMaxCostPaths();
-//
-//    // Metodi Ulteriori
-//    void addVertex(Vertex<V> * vertexToAdd);
-//        // Aggiunge il "vertexToAdd" al Grafo
-//    void addEdge(Edge<V> * edgeToAdd);
-//        // Aggiunge l' "edgeToAdd"   al Grafo
-//    void resetVerticesProperties();
-//        // Resetta le proprietà di tutti i vertici v del Grafo
-//    std::stack<Vertex<V> *> getTopologicalOrderStack();
-//        // Restituisce uno stack contenente i vertici ordinati con l'ordinamento topologico
-//    void DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack);
-//        // Visita per generare l'ordinamento topologico
-//    void relax(Edge<V> * edgeToRelax);
-//        // Verifica se la stima di cammino di peso massimo può essere aggiornata
-//    void getMaxCostPathsFromSource(Vertex<V> * source);
-//        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
-//    void getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination);
-//        // Calcola il cammino di peso massimo da una determinata sorgente a una determinata destinazione
-    
     // Metodi Get Pubblici
     std::vector<Vertex<V> *> * getVertices();
     std::vector<Edge<V> *> * getEdges();
@@ -117,8 +77,6 @@ public:
     void addEdge(Edge<V> * edgeToAdd);
         // Aggiunge l' "edgeToAdd"   al Grafo
     bool getMaxCostPathsFromSource(Vertex<V> * source);
-        // Calcola i cammini di peso massimo da una determinata sorgente a tutti gli altri vertici del grafo
-//    bool bellmanFord(Vertex<V> * source);
 };
 
 
@@ -172,6 +130,10 @@ template <class V> void Graph<V>::resetVerticesProperties() {
     for (auto & singleVertex: *(getVertices())) singleVertex->resetVertex();
 }
 
+/*
+    Metodo fondamentale per ottenre l'ordinaento topologico col quale andare a rilassare
+    gli archi uscenti dei vertici del grafo G.
+ */
 template <class V> std::stack<Vertex<V> *> Graph<V>::getTopologicalOrderStack() {
     std::stack<Vertex<V> *> stackDFS_topologicalOrder;
     resetVerticesProperties();
@@ -185,6 +147,10 @@ template <class V> std::stack<Vertex<V> *> Graph<V>::getTopologicalOrderStack() 
     return stackDFS_topologicalOrder;
 }
 
+/*
+    Visita DFS modificata in maniera tale che alla fine della visita di ogni nodo,
+    ne fa il push sullo stack.
+ */
 template <class V> void Graph<V>::DFS_visitTopologicalOrder(Vertex<V> * vertex, std::stack<Vertex<V> *> * inputStack) {
     vertex->setColor(GRAY);
     setTime(getTime() + 1);
@@ -216,6 +182,16 @@ template <class V> void Graph<V>::relax(Edge<V> * edgeToRelax) {
     }
 }
 
+/*
+    1. Si puliscono i dati di ogni vertice
+    2. Si ottiene l'ordinamento topologico dei vertici di G
+    3. Fin quando lo stack non è vuoto, rilassa gli archi uscenti del vertice u estratto
+       dallo stack
+    4. Verifica se è possibile rilassare ulteriormente gli archi. In tal caso, vi è
+       un ciclo di peso positivo. Non è possibile determinare i cammini massimi da
+       sorgente singola
+    5. Genera stringhe formattate contenenti ognuna il cammino massimo e il costo di esso
+ */
 template <class V> bool Graph<V>::getMaxCostPathsFromSource(Vertex<V> * source) {
     getStringMaxCostPaths()->clear();
     setTime(0);
@@ -282,53 +258,5 @@ template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source
     pathFromSourceToDestination << std::endl << std::endl;
     getStringMaxCostPaths()->push_back(pathFromSourceToDestination.str());
 }
-
-//
-//template <class V> void Graph<V>::getMaxCostPathToDestination(Vertex<V> * source, Vertex<V> * destination) {
-//    static std::stringstream pathFromSourceToDestination("", std::ios_base::app | std::ios_base::out);
-//
-//    Vertex<V> * current = destination;
-//    if (current == source) {
-//        pathFromSourceToDestination << std::string(std::to_string(source->getID())) << "->";
-//    } else if (current->getParent() == nullptr) {
-//        pathFromSourceToDestination << std::string(std::to_string(current->getID())) << "->" << std::string(std::to_string(current->getID())) << ": ∞\n";
-//    } else {
-//        getMaxCostPathToDestination(source, destination->getParent());
-//        pathFromSourceToDestination << std::string(std::to_string(current->getID())) << "->";
-//    }
-//
-//    std::cout << "here\n";
-//}
-
-
-//
-//template <class V> bool Graph<V>::bellmanFord(Vertex<V> * source) {
-//    getStringMaxCostPaths()->clear();
-//    resetVerticesProperties();
-//    setTime(0);
-//    source->set_d(0);
-//    source->setParent(nullptr);
-//
-//    int size = (int) getVertices()->size();
-//
-//    for (int i = 0; i < size - 1; i++) {
-//        for (auto & singleEdge: *(getEdges())) {
-//            relax(singleEdge);
-//        }
-//    }
-//
-//    for (auto & singleEdge: *(getEdges())) {
-//        Vertex<V> * u = singleEdge->getSource();
-//        Vertex<V> * v = singleEdge->getDestination();
-//        int weight = singleEdge->getWeight();
-//
-//        if (u->get_d() + weight == (std::numeric_limits<int>::min()) + weight) continue;
-//        if (v->get_d() < u->get_d() + weight) return false;
-//    }
-//
-//    source->setParent(nullptr);
-//    for (auto & singleNode: *(getVertices())) getMaxCostPathToDestination(source, singleNode);
-//    return true;
-//}
 
 #endif /* Graph_hpp */

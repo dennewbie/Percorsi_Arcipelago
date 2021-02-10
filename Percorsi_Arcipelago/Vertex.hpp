@@ -43,7 +43,6 @@ private:
     
     // Metodi Get Privati
     std::list <Edge <V> *> * getAdjacencyList();
-//    Vertex<V> * getParent();
     
     //Metodi Ulteriori Privati
     void resetVertex();                                     // Reset degli attributi "di visita" del vertice

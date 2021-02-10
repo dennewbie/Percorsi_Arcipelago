@@ -11,8 +11,6 @@
 template <class V> class Vertex;
 
 template <class V> class Edge {
-    // Non più friend di Graph: non serve.
-//    template <class T> friend class Graph;
 private:
     static unsigned int currID;     // Contatore
     const unsigned int ID;          // Codice identificativo univoco dell'arco
@@ -24,10 +22,6 @@ private:
     void setSource(Vertex<V> * newSource);
     void setDestination(Vertex<V> * newDestination);
     void setWeight(int newWeight);
-    
-    // Metodi Get Privati
-//    Vertex<V> * getSource();
-//    Vertex<V> * getDestination();
     
 public:
     // Costruttore

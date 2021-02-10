@@ -73,6 +73,11 @@
                                             Codice di errore relativo alla scelta non valida di un isola sorgente
                                             da parte dell'utente
                                         */
+#define positiveCyclePresence 300       /*
+                                            Codice di errore che segnala la presenza di un ciclo di peso positivo
+                                            all'interno del grafo che in base alla traccia dovrebbe essere un DAG.
+
+                                        */
                                         
 template <class V> class Archipelago {
 private:
@@ -127,7 +132,7 @@ public:
     bool calculateMaxCostPaths();               /*
                                                     Calcola i percorsi dal costo massimo da sorgente unica nell'arcipelago.
                                                     Se non è possibile calcolarli, restituisce false. Altrimenti restituisce true.
-                                                    Questo dipende rispettivamente dala presenza o meno di cicli di peso positivo.
+                                                    Questo dipende rispettivamente dalla presenza o meno di cicli di peso positivo.
                                                  */
     void printMaxCostPaths();                   // Stampa i percorsi dal costo massimo da sorgente unica nell'arcipelago
     void chooseSource(unsigned int source);     /*
@@ -137,7 +142,6 @@ public:
                                                     altra isola dell'arcipelago
                                                  */
     bool isFileStreamOpen();                    // Verifica se lo stream è aperto
-//    bool calculateMaxCostPaths_2();             // Come l'altra ma mediante Bellman-Ford
 };
 
 
@@ -186,6 +190,9 @@ template <class V> void Archipelago<V>::printError(unsigned short int errorCode)
         case invalidUserSourceIsland:
             std::cout << std::endl << "Source island not valid. Please try again..." << std::endl;
             break;
+        case positiveCyclePresence:
+            std::cout << std::endl << "There's a positive cycle in the input DAG. Please check it and try again..." << std::endl;
+            break;
         default:
             std::cout << std::endl << "Generic Error..." << std::endl;
             break;
@@ -203,8 +210,13 @@ template <class V> void Archipelago<V>::closeInputFileStream() {
     getInputFileStream()->close();
 }
 
-// V templato è inutile, ma siccome è la classe che risolve il problema e il problema presenta queste specifiche, allora va bene.
-// Il problema non specifica i dati contenuti in ciascuna isola
+/*
+    1. Si apre lo stream
+    2. Si legge il numero di isole e il numero dei collegamenti
+    3. Si generano tante isole quante ne sono state lette
+    4. Si generano tanti collegamenti quanti ne sono stati letti
+ 
+ */
 template <class V> void Archipelago<V>::buildGraph() {
     while (!(getInputFileStream()->is_open())) {
         openInputFileStream();
@@ -244,19 +256,12 @@ template <class V> bool Archipelago<V>::calculateMaxCostPaths() {
         return false;
     }
     
-    if (!(getGraph()->getMaxCostPathsFromSource(getSource()))) return false;
+    if (!(getGraph()->getMaxCostPathsFromSource(getSource()))) {
+        printError(positiveCyclePresence);
+        return false;
+    }
     return true;
 }
-//
-//template <class V> bool Archipelago<V>::calculateMaxCostPaths_2() {
-//    if (!(getSource()) || !(checkSource(getSource()->getID()))) {
-//        printError(invalidUserSourceIsland);
-//        return false;
-//    }
-//
-//    if (!(getGraph()->bellmanFord(getSource()))) return false;
-//    return true;
-//}
 
 template <class V> void Archipelago<V>::printMaxCostPaths() {
     for (auto it: *(getGraph()->getStringMaxCostPaths())) std::cout << it << std::endl;
