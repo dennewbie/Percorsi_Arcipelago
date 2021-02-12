@@ -68,7 +68,6 @@
 #include "Graph.hpp"
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 #define streamNotOpenSuccessfully 100   //  Codice di errore relativo alla mancata apertura dello stream di input
 #define invalidUserSourceIsland 200     /*
                                             Codice di errore relativo alla scelta non valida di un isola sorgente
