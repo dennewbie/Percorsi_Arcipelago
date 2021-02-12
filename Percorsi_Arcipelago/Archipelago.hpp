@@ -220,7 +220,11 @@ template <class V> void Archipelago<V>::closeInputFileStream() {
 template <class V> void Archipelago<V>::buildGraph() {
     while (!(getInputFileStream()->is_open())) {
         openInputFileStream();
-        if (!(getInputFileStream()->is_open())) printError(streamNotOpenSuccessfully);
+        if (!(getInputFileStream()->is_open())) {
+            printError(streamNotOpenSuccessfully);
+            std::cout << "\n...Abort\n";
+            exit(EXIT_FAILURE);
+        }
     }
     
     int nIsland, nBridge;
