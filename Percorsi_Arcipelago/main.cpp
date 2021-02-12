@@ -19,7 +19,7 @@ int main() {
     unsigned int usrSourceIsland;
     char usrContinue;
     
-    Archipelago<unsigned int> tempArchipelago = Archipelago<unsigned int>("input.txt");
+    Archipelago<unsigned int> tempArchipelago = Archipelago<unsigned int>("inpuut.txt");
     
     do {
         std::cout << usrMenuMessage;

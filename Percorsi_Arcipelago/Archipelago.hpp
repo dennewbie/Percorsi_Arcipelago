@@ -68,6 +68,7 @@
 #include "Graph.hpp"
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 #define streamNotOpenSuccessfully 100   //  Codice di errore relativo alla mancata apertura dello stream di input
 #define invalidUserSourceIsland 200     /*
                                             Codice di errore relativo alla scelta non valida di un isola sorgente
@@ -112,7 +113,7 @@ public:
         setInputFileStream(new std::ifstream);
         if (!(openInputFileStream())) {
             printError(streamNotOpenSuccessfully);
-            return;
+            exit(EXIT_FAILURE);
         }
         
         setGraph(new Graph<V>);
