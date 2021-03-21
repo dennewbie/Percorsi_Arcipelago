@@ -16,3 +16,5 @@ Determinare i percorsi con la massima qualità totale tra l’isola sorgente e t
 - 2 ≤ N ≤ 1000 
 - 1 ≤ P ≤ 10000
 -Q[i] ∈ Z per ogni collegamento
+
+### Traccia 1 - Quesito 2 - Progetto Algoritmi e Strutture Dati e Laboratorio di Algoritmi e Strutture Dati (Università Parthenope)
