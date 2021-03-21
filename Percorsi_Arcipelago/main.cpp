@@ -5,6 +5,15 @@
 //  Created by Denny Caruso on 14/01/21.
 //
 
+/*
+    Se lanciato da xCode:
+    Per abilitare l'abilità di individuazione del file all'interno della cartella del progetto:
+    Product -> Scheme -> Edit Scheme...
+        Run -> Options -> Use custom working directory... e selezionare la cartella nella quale
+        è situato il file di input.txt
+    All'avvio concedere il permesso a xCode di leggere i file su disco.
+ */
+
 #include "Archipelago.hpp"
 
 int main() {
@@ -19,7 +28,7 @@ int main() {
     unsigned int usrSourceIsland;
     char usrContinue;
     
-    Archipelago<unsigned int> tempArchipelago = Archipelago<unsigned int>("input.txt");
+    Archipelago<unsigned int> tempArchipelago = Archipelago<unsigned int>("input_2.txt");
     
     do {
         std::cout << usrMenuMessage;

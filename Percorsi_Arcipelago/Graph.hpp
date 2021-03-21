@@ -17,8 +17,8 @@
 
 template <class V> class Graph {
 private:
-    std::vector<Vertex<V> *> * vertices;        // Vector di Vertici
-    std::vector<Edge<V> *> * edges;             // Vector di Archi
+    std::vector<Vertex<V> *> * vertices;        // Puntatore a Vector di Vertici
+    std::vector<Edge<V> *> * edges;             // Puntatore a Vector di Archi
     unsigned int time;                          // Tempo (per segnare tempi di inizio e fine delle visite)
     std::vector<std::string> * stringMaxCostPaths;  /*
                                                      Puntatore a Vector di stringhe, dove ogni stringa contiene il percorso
