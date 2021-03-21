@@ -26,6 +26,9 @@
 		5209688F25B23D4800421786 /* Archipelago.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Archipelago.hpp; sourceTree = "<group>"; };
 		5209689425B23F9200421786 /* input.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
 		522F908025D18D3300C534D7 /* input_2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_2.txt; sourceTree = "<group>"; };
+		523A72B92607F0D400ED4593 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		523A72BA2607F0D400ED4593 /* relazione_esercizio_2_final.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = relazione_esercizio_2_final.pdf; sourceTree = "<group>"; };
+		523A72BB2607F0D400ED4593 /* classDiagram.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = classDiagram.pdf; sourceTree = "<group>"; };
 		52A9357725B0D83600C9B9EA /* Percorsi_Arcipelago */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Percorsi_Arcipelago; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A9357A25B0D83600C9B9EA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		52A9358425B0DAAA00C9B9EA /* Vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vertex.hpp; sourceTree = "<group>"; };
@@ -47,6 +50,9 @@
 		52A9356E25B0D83600C9B9EA = {
 			isa = PBXGroup;
 			children = (
+				523A72BB2607F0D400ED4593 /* classDiagram.pdf */,
+				523A72B92607F0D400ED4593 /* README.md */,
+				523A72BA2607F0D400ED4593 /* relazione_esercizio_2_final.pdf */,
 				52A9357925B0D83600C9B9EA /* Percorsi_Arcipelago */,
 				52A9357825B0D83600C9B9EA /* Products */,
 			);
